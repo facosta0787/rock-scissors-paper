@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { rockScissorsPaper, TGameOptions } from '../lib/rock-scissors-paper';
 import { randomNumber } from '../lib/random-number';
+import { Spinner } from '../components/Spinner/Spinner';
 
 type TOptionPlayer = TGameOptions | string;
 
@@ -32,12 +33,17 @@ export default function Home() {
   const [optionPlayer1, setOptionPlayer1] = useState<TOptionPlayer>('');
   const [optionPlayer2, setOptionPlayer2] = useState<TOptionPlayer>('');
   const [winner, setWinner] = useState<TOptionPlayer | 'Tie'>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleOptionClick = (optionPlay: TOptionPlayer): void => {
     const randomPlayer2 = Object.keys(optionsPlayer2)[randomNumber(0, 2)];
     setOptionPlayer1(optionPlay);
-    setOptionPlayer2(randomPlayer2);
-    setWinner(rockScissorsPaper(optionPlay, randomPlayer2));
+    setIsLoading(true);
+    setTimeout(() => {
+      setOptionPlayer2(randomPlayer2);
+      setWinner(rockScissorsPaper(optionPlay, randomPlayer2));
+      setIsLoading(false);
+    }, 1000);
   };
 
   const handleRestartClick = (): void => {
@@ -74,9 +80,13 @@ export default function Home() {
         )}
 
         <div className="grid place-content-center">
-          <i
-            className={`fa-solid ${optionsPlayer2[optionPlayer2]?.class} text-white text-9xl`}
-          ></i>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <i
+              className={`fa-solid ${optionsPlayer2[optionPlayer2]?.class} text-white text-9xl`}
+            ></i>
+          )}
         </div>
       </section>
 
