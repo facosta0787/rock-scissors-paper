@@ -1,18 +1,11 @@
 import { useEffect, useState } from 'react';
+import { optionsPlayer1, optionsPlayer2 } from '../../lib/players-options';
 
-export const Spinner = () => {
-  const optionsPlayer2 = {
-    rock: {
-      class: 'fa-hand-fist rotate-[270deg] scale-x-[-1]',
-    },
-    scissors: {
-      class: 'fa-hand-scissors',
-    },
-    paper: {
-      class: 'fa-hand rotate-[270deg] scale-x-[-1]',
-    },
-  };
+interface IProps {
+  side?: 'left' | 'right';
+}
 
+export const Spinner = ({ side = 'right' }: IProps) => {
   const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
@@ -22,6 +15,15 @@ export const Spinner = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  if (side === 'left')
+    return (
+      <i
+        className={`fa-solid ${
+          optionsPlayer1[Object.keys(optionsPlayer1)[counter]].class
+        } text-white text-9xl`}
+      ></i>
+    );
 
   return (
     <i

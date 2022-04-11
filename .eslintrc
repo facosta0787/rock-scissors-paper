@@ -1,4 +1,7 @@
 {
+  "globals": {
+    "JSX": "readonly"
+  },
   "settings": {
     "react": {
       "version": "detect"

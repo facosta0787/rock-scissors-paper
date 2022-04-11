@@ -2,34 +2,12 @@ import { useState } from 'react';
 import { rockScissorsPaper, TGameOptions } from '../lib/rock-scissors-paper';
 import { randomNumber } from '../lib/random-number';
 import { Spinner } from '../components/Spinner/Spinner';
+import { optionsPlayer1, optionsPlayer2 } from '../lib/players-options';
+import { OptionButton } from '../components/OptionButton/OptionButton';
 
 type TOptionPlayer = TGameOptions | string;
 
 export default function Home() {
-  const optionsPlayer1 = {
-    rock: {
-      class: 'fa-hand-back-fist rotate-90',
-    },
-    scissors: {
-      class: 'fa-hand-scissors scale-x-[-1]',
-    },
-    paper: {
-      class: 'fa-hand rotate-90',
-    },
-  };
-
-  const optionsPlayer2 = {
-    rock: {
-      class: 'fa-hand-fist rotate-[270deg] scale-x-[-1]',
-    },
-    scissors: {
-      class: 'fa-hand-scissors',
-    },
-    paper: {
-      class: 'fa-hand rotate-[270deg] scale-x-[-1]',
-    },
-  };
-
   const [optionPlayer1, setOptionPlayer1] = useState<TOptionPlayer>('');
   const [optionPlayer2, setOptionPlayer2] = useState<TOptionPlayer>('');
   const [winner, setWinner] = useState<TOptionPlayer | 'Tie'>('');
@@ -60,9 +38,13 @@ export default function Home() {
 
       <section className="w-full min-h-[calc(100vh-168px)] grid grid-cols-2 relative">
         <div className="grid place-content-center">
-          <i
-            className={`fa-solid ${optionsPlayer1[optionPlayer1]?.class} text-white text-9xl`}
-          ></i>
+          {isLoading ? (
+            <Spinner side="left" />
+          ) : (
+            <i
+              className={`fa-solid ${optionsPlayer1[optionPlayer1]?.class} text-white text-9xl`}
+            ></i>
+          )}
         </div>
 
         {winner !== '' && (
@@ -72,7 +54,7 @@ export default function Home() {
             }`}</div>
             <button
               onClick={handleRestartClick}
-              className="text-white border rounded px-4 py-2 cursor-pointer hover:bg-white hover:text-blue-700"
+              className="text-white border rounded px-4 py-2 cursor-pointer hover:bg-white hover:text-blue-700 font-semibold"
             >
               Restart
             </button>
@@ -91,27 +73,9 @@ export default function Home() {
       </section>
 
       <section className="flex justify-center items-center h-[100px]">
-        <button
-          type="button"
-          className="border rounded-full p-4 mr-2 cursor-pointer"
-          onClick={() => handleOptionClick('rock')}
-        >
-          <i className="fa-solid fa-hand-back-fist text-white text-5xl rotate-90"></i>
-        </button>
-        <button
-          type="button"
-          className="border rounded-full p-4 mr-2 cursor-pointer1"
-          onClick={() => handleOptionClick('scissors')}
-        >
-          <i className="fa-solid fa-hand-scissors text-white text-5xl scale-x-[-1]"></i>
-        </button>
-        <button
-          type="button"
-          className="border rounded-full p-4 cursor-pointer1"
-          onClick={() => handleOptionClick('paper')}
-        >
-          <i className="fa-solid fa-hand text-white text-5xl rotate-90"></i>
-        </button>
+        <OptionButton type="rock" onClick={handleOptionClick} />
+        <OptionButton type="scissors" onClick={handleOptionClick} />
+        <OptionButton type="paper" onClick={handleOptionClick} />
       </section>
     </>
   );
