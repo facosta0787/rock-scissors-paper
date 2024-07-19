@@ -1,4 +1,5 @@
-# Next.js + Tailwind + Typescript starter template
+# Rock Scissors Paper
+## Next.js + Tailwind + Typescript starter template
 
 Base Next.js project template that uses
 
