@@ -1,4 +1,10 @@
 # Rock Scissors Paper
+
+<video width="640" height="480" controls>
+  <source src="./demo-game.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Next.js + Tailwind + Typescript starter template
 
 Base Next.js project template that uses
